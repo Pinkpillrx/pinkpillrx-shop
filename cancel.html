@@ -1,0 +1,419 @@
+/* ===========================
+   PinkpillRx Shop — Frontend JS
+   =========================== */
+
+// ---- Cart State ----
+let cart = JSON.parse(localStorage.getItem('pinkpillrx-cart') || '[]');
+let currentMerchProduct = null;
+
+// ---- Init ----
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartUI();
+  loadDigitalProducts();
+  loadMerchProducts();
+});
+
+// =============================
+// BUY NOW (digital products)
+// =============================
+async function buyNow(product) {
+  const btn = event.currentTarget;
+  btn.disabled = true;
+  btn.textContent = 'Loading...';
+
+  try {
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: [{ ...product, quantity: 1 }],
+        mode: 'direct'
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      showToast('Something went wrong. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Buy Now';
+    }
+  } catch (err) {
+    console.error(err);
+    showToast('Connection error. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Buy Now';
+  }
+}
+
+// =============================
+// CART (merch products)
+// =============================
+function addToCart(product) {
+  const existing = cart.find(
+    i => i.id === product.id && i.variantId === product.variantId
+  );
+
+  if (existing) {
+    existing.quantity = (existing.quantity || 1) + 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  saveCart();
+  updateCartUI();
+  showToast(`${product.name} added to cart.`);
+  closeModal();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  saveCart();
+  updateCartUI();
+  renderCartItems();
+}
+
+function saveCart() {
+  localStorage.setItem('pinkpillrx-cart', JSON.stringify(cart));
+}
+
+function updateCartUI() {
+  const count = cart.reduce((sum, i) => sum + (i.quantity || 1), 0);
+  const countEl = document.getElementById('cart-count');
+  if (!countEl) return;
+
+  if (count > 0) {
+    countEl.textContent = count;
+    countEl.style.display = 'flex';
+  } else {
+    countEl.style.display = 'none';
+  }
+}
+
+async function checkoutCart() {
+  if (cart.length === 0) return;
+
+  const btn = document.querySelector('#cart-footer .btn-primary');
+  btn.disabled = true;
+  btn.textContent = 'Loading...';
+
+  try {
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: cart,
+        mode: 'cart'
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      showToast('Checkout failed. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Checkout';
+    }
+  } catch (err) {
+    showToast('Connection error. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Checkout';
+  }
+}
+
+// =============================
+// CART DRAWER UI
+// =============================
+function openCart() {
+  document.getElementById('cart-overlay').classList.add('active');
+  document.getElementById('cart-drawer').classList.add('active');
+  renderCartItems();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cart-overlay').classList.remove('active');
+  document.getElementById('cart-drawer').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function renderCartItems() {
+  const container = document.getElementById('cart-items');
+  const footer = document.getElementById('cart-footer');
+
+  if (cart.length === 0) {
+    container.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+    footer.style.display = 'none';
+    return;
+  }
+
+  footer.style.display = 'block';
+
+  const total = cart.reduce((sum, i) => sum + (i.price * (i.quantity || 1)), 0);
+  document.getElementById('cart-total-price').textContent = `$${(total / 100).toFixed(2)}`;
+
+  container.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-thumb">
+        ${item.image
+          ? `<img src="${item.image}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover">`
+          : '🛍️'}
+      </div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        ${item.variantLabel ? `<div class="cart-item-variant">${item.variantLabel}</div>` : ''}
+        <button class="cart-item-remove" onclick="removeFromCart(${idx})">Remove</button>
+      </div>
+      <div class="cart-item-price">$${(item.price / 100).toFixed(2)}</div>
+    </div>
+  `).join('');
+}
+
+// =============================
+// VARIANT MODAL (for merch)
+// =============================
+function openVariantModal(product) {
+  currentMerchProduct = product;
+
+  const content = document.getElementById('modal-content');
+
+  // Get unique variant options
+  const sizes = [...new Set(product.variants.map(v => v.options?.size).filter(Boolean))];
+  const colors = [...new Set(product.variants.map(v => v.options?.color).filter(Boolean))];
+
+  let html = `
+    <div class="modal-product-name">${product.name}</div>
+    <div class="modal-product-price">$${(product.variants[0]?.price / 100 || 0).toFixed(2)}</div>
+  `;
+
+  if (sizes.length > 0) {
+    html += `
+      <div class="variant-label">Size</div>
+      <div class="variant-options" id="size-options">
+        ${sizes.map(s => `
+          <button class="variant-btn" data-size="${s}" onclick="selectVariant('size', '${s}', this)">${s}</button>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  if (colors.length > 0) {
+    html += `
+      <div class="variant-label">Color</div>
+      <div class="variant-options" id="color-options">
+        ${colors.map(c => `
+          <button class="variant-btn" data-color="${c}" onclick="selectVariant('color', '${c}', this)">${c}</button>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  html += `
+    <button class="btn-primary btn-full" style="margin-top:16px" id="add-to-cart-btn" onclick="addSelectedToCart()">
+      Add to Cart
+    </button>
+  `;
+
+  content.innerHTML = html;
+
+  document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('variant-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function selectVariant(type, value, el) {
+  const group = el.closest('.variant-options');
+  group.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function addSelectedToCart() {
+  if (!currentMerchProduct) return;
+
+  const selectedSize = document.querySelector('#size-options .variant-btn.selected')?.dataset.size;
+  const selectedColor = document.querySelector('#color-options .variant-btn.selected')?.dataset.color;
+
+  // Find matching variant
+  const variant = currentMerchProduct.variants.find(v => {
+    const sizeMatch = !selectedSize || v.options?.size === selectedSize;
+    const colorMatch = !selectedColor || v.options?.color === selectedColor;
+    return sizeMatch && colorMatch;
+  });
+
+  if (!variant) {
+    showToast('Please select your options.');
+    return;
+  }
+
+  const variantLabel = [selectedSize, selectedColor].filter(Boolean).join(' / ');
+
+  addToCart({
+    id: currentMerchProduct.id,
+    variantId: variant.id,
+    name: currentMerchProduct.name,
+    price: variant.price,
+    type: 'physical',
+    printifyProductId: currentMerchProduct.printifyId,
+    image: currentMerchProduct.image,
+    variantLabel
+  });
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
+  document.getElementById('variant-modal').classList.remove('active');
+  document.body.style.overflow = '';
+  currentMerchProduct = null;
+}
+
+// =============================
+// LOAD PRODUCTS FROM API
+// =============================
+async function loadDigitalProducts() {
+  const container = document.getElementById('digital-products');
+  if (!container) return;
+
+  try {
+    const res = await fetch('/api/get-products?type=digital');
+    const products = await res.json();
+
+    // Filter out the main ebook (already shown separately)
+    const additional = products.filter(p => p.id !== 'ebook-main');
+
+    if (additional.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          More guides and resources coming soon.
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = additional.map(p => renderProductCard(p, 'digital')).join('');
+  } catch (err) {
+    container.innerHTML = `
+      <div class="empty-state">
+        Unable to load products right now.
+      </div>
+    `;
+  }
+}
+
+async function loadMerchProducts() {
+  const container = document.getElementById('merch-products');
+  if (!container) return;
+
+  try {
+    const res = await fetch('/api/get-products?type=physical');
+    const products = await res.json();
+
+    if (products.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          Merch is coming soon. Follow @pinkpillrx for the launch.
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = products.map(p => renderMerchCard(p)).join('');
+  } catch (err) {
+    container.innerHTML = `
+      <div class="empty-state">
+        Unable to load merch right now.
+      </div>
+    `;
+  }
+}
+
+// =============================
+// PRODUCT CARD RENDERERS
+// =============================
+function renderProductCard(product, type) {
+  const price = product.price ? `$${(product.price / 100).toFixed(2)}` : '';
+  const imageHtml = product.image
+    ? `<img class="product-img" src="${product.image}" alt="${product.name}" loading="lazy">`
+    : `<div class="product-cover-mini">
+         <div style="font-size:2.5rem;color:var(--pink)">℞</div>
+         <div style="font-family:var(--font-display);font-size:0.9rem;color:var(--text-muted);text-align:center;padding:0 16px">${product.name}</div>
+       </div>`;
+
+  return `
+    <div class="product-card">
+      ${imageHtml}
+      <div class="product-body">
+        <div class="product-type-tag">Digital · PDF</div>
+        <h4 class="product-name">${product.name}</h4>
+        <p class="product-desc">${product.description || 'Delivered instantly to your inbox.'}</p>
+        <div class="product-footer">
+          <span class="product-price">${price}</span>
+          <button class="btn-primary btn-sm"
+            onclick="buyNow({id:'${product.id}', name:'${product.name.replace(/'/g, "\\'")}', price:${product.price}, type:'digital'})">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderMerchCard(product) {
+  const minPrice = product.variants
+    ? Math.min(...product.variants.map(v => v.price))
+    : 0;
+  const priceStr = minPrice ? `From $${(minPrice / 100).toFixed(2)}` : '';
+
+  const imageHtml = product.image
+    ? `<img class="product-img" src="${product.image}" alt="${product.name}" loading="lazy">`
+    : `<div class="product-cover-mini" style="background:var(--surface-2)">
+         <div style="font-size:2rem">🛍️</div>
+         <div style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;text-align:center;padding:0 12px">${product.name}</div>
+       </div>`;
+
+  return `
+    <div class="product-card">
+      ${imageHtml}
+      <div class="product-body">
+        <div class="product-type-tag">Merch</div>
+        <h4 class="product-name">${product.name}</h4>
+        <p class="product-desc">${product.description || 'Print-on-demand. Ships directly to you.'}</p>
+        <div class="product-footer">
+          <span class="product-price">${priceStr}</span>
+          <button class="btn-primary btn-sm"
+            onclick="openVariantModal(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+            Select Options
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// =============================
+// TOAST NOTIFICATION
+// =============================
+let toastTimer;
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// =============================
+// NAV SCROLL EFFECT
+// =============================
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  if (!nav) return;
+  if (window.scrollY > 20) {
+    nav.style.background = 'rgba(13, 11, 28, 0.97)';
+  } else {
+    nav.style.background = 'rgba(13, 11, 28, 0.85)';
+  }
+}, { passive: true });

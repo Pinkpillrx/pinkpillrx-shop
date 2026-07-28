@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PinkpillRx Shop — Ebooks, guides, and merch from Katie & Jay Fillmore.">
+  <title>PinkpillRx Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <!-- BRAND STRIPE: mint + pink split, mirrors podcast art -->
+  <div class="brand-stripe"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="/" class="nav-logo">Pinkpill<span class="logo-rx">Rx</span></a>
+    <div class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="https://pinkpillrx2.netlify.app/" target="_blank">Library</a>
+    </div>
+    <button class="cart-btn" id="cart-btn" onclick="openCart()" aria-label="Open cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-count" id="cart-count" style="display:none">0</span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+
+      <div class="book-wrap">
+        <div class="book-3d" id="book-3d">
+          <div class="book-cover">
+            <div class="book-brand">PINKPILLRX</div>
+            <div class="book-rx">℞</div>
+            <div class="book-title-text">How to Talk to Men<br><em>Who Don't Get It</em></div>
+            <div class="book-divider"></div>
+            <div class="book-author">Katie Fillmore, RN</div>
+          </div>
+          <div class="book-spine">
+            <span>How to Talk to Men Who Don't Get It</span>
+          </div>
+          <div class="book-back"></div>
+        </div>
+        <div class="book-shadow"></div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-tag">New Release</div>
+        <h1 class="hero-title">How to Talk to Men<br><em>Who Don't Get It</em></h1>
+        <p class="hero-sub">A Guide for Women Who Are Tired of Explaining</p>
+        <p class="hero-desc">Part satire. Part research. Part survival guide. Built for women exhausted by the emotional labor of explaining sexism, inequality, and their own lived experiences.</p>
+        <div class="hero-price-row">
+          <span class="hero-price">$14.99</span>
+          <span class="hero-format">Digital PDF</span>
+        </div>
+        <button class="btn-primary btn-lg"
+          onclick="buyNow({id:'ebook-main', name:'How to Talk to Men Who Don\'t Get It', price:1499, type:'digital'})">
+          Get the Ebook
+        </button>
+        <p class="hero-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Delivered to your inbox instantly after purchase.
+        </p>
+        <div class="podcast-badge">
+          <div class="podcast-badge-split">🎧</div>
+          <div class="podcast-badge-text">
+            <div class="podcast-badge-label">Also on</div>
+            <div class="podcast-badge-name">PinkpillRx Podcast</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHAT'S INSIDE -->
+  <section class="inside">
+    <div class="container">
+      <div class="section-eyebrow">Inside the Book</div>
+      <h2 class="section-title">What You're Getting</h2>
+      <div class="inside-grid">
+        <div class="inside-card">
+          <div class="inside-icon">🧠</div>
+          <h3>The Psychology of Resistance</h3>
+          <p>Research-backed explanations for why facts alone rarely change minds, and what actually does.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-icon">🎭</div>
+          <h3>Satirical Profiles</h3>
+          <p>The Devil's Advocate. The Nice Guy. The Literalist. The Cool Feminist. You've met them all. Now you have names and scripts.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-icon">💬</div>
+          <h3>Pocket Scripts</h3>
+          <p>Practical conversation starters, reframes, and exit strategies. Use them word for word.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-icon">📊</div>
+          <h3>The Research</h3>
+          <p>Workplace inequality. Healthcare bias. Unpaid labor. Violence statistics. All cited and ready to share.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-icon">✊</div>
+          <h3>Microfeminist Actions</h3>
+          <p>Small, practical steps to reclaim your voice, your boundaries, and your confidence every day.</p>
+        </div>
+        <div class="inside-card">
+          <div class="inside-icon">🚪</div>
+          <h3>The Exit Strategy</h3>
+          <p>Because sometimes the most powerful thing you can say is nothing at all. Permission granted.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE SHOP -->
+  <section class="shop-section" id="shop">
+    <div class="container">
+      <div class="section-eyebrow">The Shop</div>
+      <h2 class="section-title">Everything from PinkpillRx</h2>
+
+      <!-- Ebook Featured -->
+      <div class="shop-category">
+        <h3 class="category-label">Ebooks</h3>
+        <div class="products-grid">
+          <div class="product-card">
+            <div class="product-cover-mini">
+              <div class="mini-book">
+                <div class="mini-rx">℞</div>
+                <div class="mini-title">How to Talk<br>to Men<br><em>Who Don't<br>Get It</em></div>
+              </div>
+            </div>
+            <div class="product-body">
+              <div class="product-type-tag">Ebook · PDF</div>
+              <h4 class="product-name">How to Talk to Men Who Don't Get It</h4>
+              <p class="product-desc">A Guide for Women Who Are Tired of Explaining. Delivered instantly to your inbox.</p>
+              <div class="product-footer">
+                <span class="product-price">$14.99</span>
+                <button class="btn-primary btn-sm"
+                  onclick="buyNow({id:'ebook-main', name:'How to Talk to Men Who Don\'t Get It', price:1499, type:'digital'})">
+                  Buy Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital Downloads -->
+      <div class="shop-category">
+        <h3 class="category-label">Digital Downloads</h3>
+        <div class="products-grid" id="digital-products">
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <span>Loading products...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Merch -->
+      <div class="shop-category">
+        <h3 class="category-label">Merch</h3>
+        <div class="products-grid" id="merch-products">
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <span>Loading merch...</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-eyebrow">Digital Products</div>
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps-row">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h4>Purchase</h4>
+          <p>Click any "Buy Now." You'll go to a secure Stripe checkout. Credit, debit, or Apple Pay.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4>Check Your Inbox</h4>
+          <p>Within seconds, a download link lands in your email from PinkpillRx.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4>Download and Save</h4>
+          <p>Click the link and save the PDF. Works on any device. Questions? pinkpillrx@gmail.com.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-text">
+          <div class="section-eyebrow">About PinkpillRx</div>
+          <h2>Katie &amp; Jay Fillmore</h2>
+          <p>Katie Fillmore is a registered nurse, autistic, ADHD, and the co-founder of PinkpillRx alongside her husband Jay. Their platform reaches over 620,000 people across Instagram and TikTok with evidence-based women's health education, advocacy, and the real chaos of everyday life.</p>
+          <p>PinkpillRx exists so women from underrepresented communities feel seen, heard, and advocated for. Everything here is built with that in mind.</p>
+          <div class="social-links">
+            <a href="https://instagram.com/pinkpillrx" target="_blank" rel="noopener">Instagram @pinkpillrx</a>
+            <a href="https://tiktok.com/@kators88" target="_blank" rel="noopener">TikTok @kators88</a>
+            <a href="https://pinkpillrx2.netlify.app/" target="_blank" rel="noopener">Research Library</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-logo">Pinkpill<span class="logo-rx">Rx</span></div>
+          <div class="footer-stripe"></div>
+          <p class="footer-tagline">Stay educated. Take the PinkPill.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#shop">Shop</a>
+          <a href="https://pinkpillrx2.netlify.app/" target="_blank">Library</a>
+          <a href="mailto:pinkpillrx@gmail.com">Contact</a>
+          <a href="https://instagram.com/pinkpillrx" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://tiktok.com/@kators88" target="_blank" rel="noopener">TikTok</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 PinkpillRx. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button onclick="closeCart()" class="cart-close">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty">Your cart is empty.</div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cart-total-price">$0.00</span>
+      </div>
+      <button class="btn-primary btn-full" onclick="checkoutCart()">Checkout</button>
+      <p class="cart-note">Secure checkout via Stripe</p>
+    </div>
+  </div>
+
+  <!-- VARIANT MODAL (for merch with size/color options) -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+  <div class="modal" id="variant-modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <script src="/assets/shop.js"></script>
+</body>
+</html>

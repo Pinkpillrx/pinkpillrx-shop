@@ -12,8 +12,10 @@
 </head>
 <body>
 
+  <!-- BRAND STRIPE: mint + pink split, mirrors podcast art -->
   <div class="brand-stripe"></div>
 
+  <!-- NAV -->
   <nav class="nav" id="nav">
     <a href="/" class="nav-logo">Pinkpill<span class="logo-rx">Rx</span></a>
     <div class="nav-links">
@@ -31,22 +33,17 @@
     </button>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
+
       <div class="book-wrap">
-        <div class="book-3d" id="book-3d">
-          <div class="book-cover">
-            <div class="book-brand">PINKPILLRX</div>
-            <div class="book-rx">℞</div>
-            <div class="book-title-text">How to Talk to Men<br><em>Who Don't Get It</em></div>
-            <div class="book-divider"></div>
-            <div class="book-author">Katie Fillmore, RN</div>
-          </div>
-          <div class="book-spine"><span>How to Talk to Men Who Don't Get It</span></div>
-          <div class="book-back"></div>
+        <div class="book-img-wrap">
+          <img src="/assets/book-cover.svg" alt="How to Talk to Men Who Don't Get It — Katie Fillmore, RN" class="book-img"/>
+          <div class="book-img-shadow"></div>
         </div>
-        <div class="book-shadow"></div>
       </div>
+
       <div class="hero-content">
         <div class="hero-tag">New Release</div>
         <h1 class="hero-title">How to Talk to Men<br><em>Who Don't Get It</em></h1>
@@ -56,24 +53,29 @@
           <span class="hero-price">$14.99</span>
           <span class="hero-format">Digital PDF</span>
         </div>
-        <button class="btn-primary btn-lg" onclick="buyNow({id:'ebook-main', name:'How to Talk to Men Who Don\'t Get It', price:1499, type:'digital'})">
+        <button class="btn-primary btn-lg"
+          onclick="buyNow({id:'ebook-main', name:'How to Talk to Men Who Don\'t Get It', price:1499, type:'digital'})">
           Get the Ebook
         </button>
         <p class="hero-note">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
           Delivered to your inbox instantly after purchase.
         </p>
         <div class="podcast-badge">
           <div class="podcast-badge-split">🎧</div>
           <div class="podcast-badge-text">
-            <div class="podcast-badge-label">Also on</div>
+            <div class="podcast-badge-label">Featured on</div>
             <div class="podcast-badge-name">PinkpillRx Podcast</div>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
+  <!-- WHAT'S INSIDE -->
   <section class="inside">
     <div class="container">
       <div class="section-eyebrow">Inside the Book</div>
@@ -113,10 +115,13 @@
     </div>
   </section>
 
+  <!-- THE SHOP -->
   <section class="shop-section" id="shop">
     <div class="container">
       <div class="section-eyebrow">The Shop</div>
       <h2 class="section-title">Everything from PinkpillRx</h2>
+
+      <!-- Ebook Featured -->
       <div class="shop-category">
         <h3 class="category-label">Ebooks</h3>
         <div class="products-grid">
@@ -133,27 +138,91 @@
               <p class="product-desc">A Guide for Women Who Are Tired of Explaining. Delivered instantly to your inbox.</p>
               <div class="product-footer">
                 <span class="product-price">$14.99</span>
-                <button class="btn-primary btn-sm" onclick="buyNow({id:'ebook-main', name:'How to Talk to Men Who Don\'t Get It', price:1499, type:'digital'})">Buy Now</button>
+                <button class="btn-primary btn-sm"
+                  onclick="buyNow({id:'ebook-main', name:'How to Talk to Men Who Don\'t Get It', price:1499, type:'digital'})">
+                  Buy Now
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Premium Library Access -->
+      <div class="shop-category">
+        <h3 class="category-label">Premium Access</h3>
+        <div class="library-card">
+          <div class="library-card-left">
+            <div class="library-icon">
+              <div class="library-icon-inner">℞</div>
+            </div>
+          </div>
+          <div class="library-card-body">
+            <div class="product-type-tag" style="margin-bottom:8px">Research Library · Premium</div>
+            <h3 class="library-title">PinkpillRx Annotated Research Library</h3>
+            <p class="library-tagline">Dispensing evidence, one citation at a time.</p>
+            <p class="library-desc">Our premium library includes 700+ sources cited across PinkpillRx content. Unlike the free library, many sources include summaries, major claims, statistics, and research notes — with keyword search across all annotations. New sources and annotations are added regularly at no extra cost, and you can request sources or statistics directly from within the library.</p>
+            <div class="library-features">
+              <div class="library-feature">
+                <span class="library-feature-icon">📚</span>
+                <span>700+ cited sources</span>
+              </div>
+              <div class="library-feature">
+                <span class="library-feature-icon">🔍</span>
+                <span>Keyword search across annotations</span>
+              </div>
+              <div class="library-feature">
+                <span class="library-feature-icon">📝</span>
+                <span>Summaries, claims, and research notes</span>
+              </div>
+              <div class="library-feature">
+                <span class="library-feature-icon">✉️</span>
+                <span>Request sources directly from the library</span>
+              </div>
+              <div class="library-feature">
+                <span class="library-feature-icon">🔄</span>
+                <span>New sources added regularly, no extra cost</span>
+              </div>
+            </div>
+            <div class="library-footer">
+              <div>
+                <div class="library-price">$99</div>
+                <div class="library-price-note">One-time · Lifetime access · No renewals</div>
+              </div>
+              <a href="https://pinkpillrx2.netlify.app/" target="_blank" class="btn-primary btn-lg">
+                Get Lifetime Access
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital Downloads -->
       <div class="shop-category">
         <h3 class="category-label">Digital Downloads</h3>
         <div class="products-grid" id="digital-products">
-          <div class="loading-state"><div class="loading-spinner"></div><span>Loading products...</span></div>
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <span>Loading products...</span>
+          </div>
         </div>
       </div>
+
+      <!-- Merch -->
       <div class="shop-category">
         <h3 class="category-label">Merch</h3>
         <div class="products-grid" id="merch-products">
-          <div class="loading-state"><div class="loading-spinner"></div><span>Loading merch...</span></div>
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <span>Loading merch...</span>
+          </div>
         </div>
       </div>
+
     </div>
   </section>
 
+  <!-- HOW IT WORKS -->
   <section class="how-section">
     <div class="container">
       <div class="section-eyebrow">Digital Products</div>
@@ -180,6 +249,7 @@
     </div>
   </section>
 
+  <!-- ABOUT -->
   <section class="about-section" id="about">
     <div class="container">
       <div class="about-inner">
@@ -198,6 +268,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
@@ -220,6 +291,7 @@
     </div>
   </footer>
 
+  <!-- CART DRAWER -->
   <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
   <div class="cart-drawer" id="cart-drawer">
     <div class="cart-header">
@@ -239,12 +311,14 @@
     </div>
   </div>
 
+  <!-- VARIANT MODAL (for merch with size/color options) -->
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
   <div class="modal" id="variant-modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modal-content"></div>
   </div>
 
+  <!-- TOAST NOTIFICATION -->
   <div class="toast" id="toast"></div>
 
   <script src="/assets/shop.js"></script>

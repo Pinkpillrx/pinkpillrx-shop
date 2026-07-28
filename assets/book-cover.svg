@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap');
+    </style>
+
+    <!-- Background radial gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="18%" r="120%" fx="50%" fy="18%">
+      <stop offset="0%"   stop-color="#3a1044"/>
+      <stop offset="45%"  stop-color="#2a0b33"/>
+      <stop offset="100%" stop-color="#1b0722"/>
+    </radialGradient>
+
+    <!-- Top stripe: teal → blue-purple → pink → salmon -->
+    <linearGradient id="topStripe" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#3fd0c9"/>
+      <stop offset="38%"  stop-color="#6f8fd6"/>
+      <stop offset="72%"  stop-color="#e2647f"/>
+      <stop offset="100%" stop-color="#f4776a"/>
+    </linearGradient>
+
+    <!-- Left bar: teal gradient -->
+    <linearGradient id="leftBar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#3fd0c9"/>
+      <stop offset="55%"  stop-color="#2f9e8f"/>
+      <stop offset="100%" stop-color="#1f6f66"/>
+    </linearGradient>
+
+    <!-- Pink glow filter -->
+    <filter id="pinkGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle radial pink overlay -->
+    <radialGradient id="pinkOverlay" cx="50%" cy="30%" r="60%">
+      <stop offset="0%"   stop-color="#f2708a" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#f2708a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="600" fill="url(#bgGrad)"/>
+
+  <!-- Pink radial overlay -->
+  <rect width="400" height="600" fill="url(#pinkOverlay)"/>
+
+  <!-- Top stripe -->
+  <rect x="0" y="0" width="400" height="8" fill="url(#topStripe)"/>
+
+  <!-- Left teal bar -->
+  <rect x="0" y="8" width="10" height="592" fill="url(#leftBar)"/>
+
+  <!-- ── CONTENT (offset by left bar) ── -->
+
+  <!-- "Pinkpill" label -->
+  <text x="210" y="58"
+        font-family="'IBM Plex Mono', 'Courier New', monospace"
+        font-size="10" font-weight="400"
+        letter-spacing="6"
+        fill="rgba(255,255,255,0.62)"
+        text-anchor="middle"
+        text-transform="uppercase">PINKPILL</text>
+
+  <!-- Rx — large, centered, pink -->
+  <!-- R normal, x italic -->
+  <text x="178" y="165"
+        font-family="'Playfair Display', Georgia, serif"
+        font-size="112" font-weight="700"
+        fill="#f2708a"
+        filter="url(#pinkGlow)"
+        text-anchor="middle">R</text>
+  <text x="240" y="165"
+        font-family="'Playfair Display', Georgia, serif"
+        font-size="112" font-weight="700"
+        font-style="italic"
+        fill="#f2708a"
+        filter="url(#pinkGlow)"
+        text-anchor="middle">x</text>
+
+  <!-- Thin center rule under Rx -->
+  <line x1="167" y1="178" x2="247" y2="178"
+        stroke="url(#topStripe)" stroke-width="1.5" opacity="0.8"/>
+
+  <!-- Main title: How to Talk -->
+  <text x="210" y="240"
+        font-family="'Playfair Display', Georgia, serif"
+        font-size="52" font-weight="900"
+        fill="#fdf6f7"
+        text-anchor="middle"
+        letter-spacing="-0.5">How to Talk</text>
+
+  <!-- to Men -->
+  <text x="210" y="298"
+        font-family="'Playfair Display', Georgia, serif"
+        font-size="52" font-weight="900"
+        fill="#fdf6f7"
+        text-anchor="middle"
+        letter-spacing="-0.5">to Men</text>
+
+  <!-- Who Don't Get It — italic pink -->
+  <text x="210" y="358"
+        font-family="'Playfair Display', Georgia, serif"
+        font-size="40" font-weight="700"
+        font-style="italic"
+        fill="#f2708a"
+        text-anchor="middle"
+        letter-spacing="-0.3">Who Don't Get It</text>
+
+  <!-- Thin divider rule -->
+  <line x1="185" y1="378" x2="227" y2="378"
+        stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+
+  <!-- Subtitle in mono -->
+  <text x="210" y="408"
+        font-family="'IBM Plex Mono', 'Courier New', monospace"
+        font-size="11" font-weight="400"
+        letter-spacing="1.2"
+        fill="rgba(255,255,255,0.60)"
+        text-anchor="middle">A Guide for Women Who</text>
+  <text x="210" y="427"
+        font-family="'IBM Plex Mono', 'Courier New', monospace"
+        font-size="11" font-weight="400"
+        letter-spacing="1.2"
+        fill="rgba(255,255,255,0.60)"
+        text-anchor="middle">Are Tired of Explaining</text>
+
+  <!-- Bottom author block -->
+  <text x="210" y="535"
+        font-family="'IBM Plex Mono', 'Courier New', monospace"
+        font-size="8" font-weight="400"
+        letter-spacing="3.5"
+        fill="rgba(255,255,255,0.45)"
+        text-anchor="middle">WRITTEN BY</text>
+
+  <text x="210" y="562"
+        font-family="'Playfair Display', Georgia, serif"
+        font-size="26" font-weight="500"
+        fill="#fdf6f7"
+        text-anchor="middle"
+        letter-spacing="0.3">Katie Fillmore</text>
+
+  <!-- Bottom stripe -->
+  <rect x="0" y="592" width="400" height="8" fill="url(#topStripe)"/>
+</svg>
